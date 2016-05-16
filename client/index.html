@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <title>МИО-WEB</title>
+     
+
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.18/angular-ui-router.min.js"></script>
+      
+      <script src="app.js"></script>
+      <script src="services/user.service.js"></script>
+
+      <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+
+      <link href="carousel.css" rel="stylesheet">
+      <link href="content/styles.css" rel="stylesheet">
+      
+    </head>
+    <body ng-app="mioweb">
+      <header>
+      <div class="header">
+        <nav class="navbar navbar-def navbar-fixed-top">
+          <button type="button" class="btn btn-info pull-right btn-toggle visible-xs-block" data-toggle="collapse" data-target="#menu-collapse">
+            Menu
+          </button>
+          <div class="navbar-header logo">
+            <a href="#" class="navbar-brand"><img src="img/logo.png"/></a>
+          </div>
+          <div class="navbar-collapse collapse container-fluid" id="menu-collapse">
+            <ul class="nav navbar-nav nav-btn">
+              <li class="active"><a ui-sref="home">Главная</a></li>
+              <li><a ui-sref="statistic">Статистика</a></li>
+              <li><a ui-sref="download">Скачать</a></li>
+              <li><a ui-sref="contacts">Контакты</a></li>
+              <li><a ui-sref="buy">Купить</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right nav-btn">
+              
+              <login-form></login-form>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div id="carousel" class="carousel slide" data-ride="carousel">
+        <!-- Indicators -->
+        <ol class="carousel-indicators">
+          <li data-target="#carousel" data-slide-to="0" class="active"></li>
+          <li data-target="#carousel" data-slide-to="1"></li>
+          <li data-target="#carousel" data-slide-to="2"></li>
+        </ol>
+        <!-- Wrapper for slides -->
+          <div class="carousel-inner"  role="listbox">
+            <div class="item active">
+              <img src="img/slider1.png" alt="">
+            </div>
+            <div class="item">
+              <img src="img/slider2.png" alt="">
+            </div>
+            <div class="item">
+              <img src="img/slider3.png" alt="">
+            </div>
+          </div>
+      </div>
+    </header>
+    <div ui-view></div>
+
+    <footer>
+      <div class="subfooterone_wrapper">
+        <div class="subfooterone container">
+          <div class="row">
+            <div class="col-md-10 col-md-offset-1">
+              <div class="col-md-4">
+                <h4>МИО-WEB</h4>
+                <p class="text-justify whitecol">На основе биоэлектрических потенциалов мышц человека можно управлять физическими объектами. Для этого был создан комплекс управления курсором мыши при помощи ЭМГ</p>
+              </div>
+              <div class="col-md-4">
+                <h4>Вопросы</h4>
+                <a href="#" class="tag">Responsive</a>
+                <a href="#" class="tag">Flat</a>
+                <a href="#" class="tag">Template</a>
+                <a href="#" class="tag">Design</a>
+                <a href="#" class="tag">Design</a>
+                <a href="#" class="tag">Creative</a>
+              </div>
+              <div class="col-md-4">
+                <div class="row">
+                  <div>
+                    <h4>Обратная связь</h4>
+                  </div>
+                </div>
+
+                <form class="form-horizontal contacts" >
+                  <fieldset>
+                    <div class="form-group">
+                      <label for="name" class="control-label">Тел.:</label>
+                      <div>
+                        <input class="form-control input-sm" type="text" id="name" name="name">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label for="email" class="control-label">Email:</label>
+                      <div>
+                        <input class="form-control input-sm" type="text" id="email" name="email">
+                      </div>
+                    </div>
+                   <div class="form-group">
+                      <label for="message" class="control-label">Сообщение:</label>
+                      <div>
+                        <textarea class="form-control input-sm" name="message" id="message"></textarea>
+                      </div>
+                    </div>
+                  </fieldset>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="subfootertwo_wrapper">
+        <div class="subfootertwo container">
+          <div class="row">
+            <div class="col-md-5 col-md-offset-1">
+              <div class="copyright">©2016 МИО-WEB by Maria-Tyan</div>
+            </div>
+            <div class="col-md-5">
+              <ul class="footer-menu nav">
+              <li class="active"><a ui-sref="home">Главная</a></li>
+              <li><a ui-sref="statistic">Статистика</a></li>
+              <li><a ui-sref="download">Скачать</a></li>
+              <li><a ui-sref="contacts">Контакты</a></li>
+              <li><a ui-sref="buy">Купить</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+    </body>
+  </html>
