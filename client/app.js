@@ -5,14 +5,19 @@
         .config(config)
         .run(run)
         .service('SessionService', [
-            '$injector',
-            function($injector) {
-              "use strict";
-              this.login = function(email, password) {
-                      
-                  $http.post('/login', {
-                      email: email,
-                      password: password,
+            '$injector', '$http',
+            function($injector, $http) {
+                "use strict";
+                this.register = function(email, password) {
+                    $http.post('/register', {
+                        email: email,
+                        password: password,
+                    })
+                }
+                this.login = function(email, password) {     
+                    $http.post('/login', {
+                        email: email,
+                        password: password,
                     })
                     .success(function(response) {
                       
@@ -21,7 +26,7 @@
                       
                     })
                 }
-              this.checkAccess = function(event, toState, toParams, fromState, fromParams) {
+              /*this.checkAccess = function(event, toState, toParams, fromState, fromParams) {
                 var $scope = $injector.get('$rootScope'),
                     $sessionStorage = $injector.get('$sessionStorage');
 
@@ -37,28 +42,27 @@
                   } else {
                     // если пользователь не авторизован - отправляем на страницу авторизации
                     event.preventDefault();
-                    $scope.$state.go('auth.login');
+                    $scope.$state.go('home');
                   }
                 }
-              };
+              };*/
             }
           ])
-        .directive("loginForm", [
-            function() {
+        .directive("loginForm", ['SessionService',
+            function(SessionService) {
               return {
                 restrict: 'E',
                 scope: {},
                 templateUrl: './login/loginModalTemplate.html',
                 replace: 'true',
-                link: ['$scope', '$http', '$window',
-                  function($scope, $http, $window, SessionService) {
-                    $scope.loggedIn = SessionService.checkAccess(event, toState, toParams, fromState, fromParams);
-                    $scope.loginError = false;
-                    $scope.login = function(email, password) {
-                      SessionService.login(email, password);
+                link: function(scope) {
+                    scope.login = function(email, password) {
+                        SessionService.login(email, password);
                     }
+                    scope.register = function(email, password) {
+                            SessionService.login(email, password);
+                        }
                   }
-                ]
               }
             }
         ]);
@@ -88,6 +92,10 @@
     	        url: "/buy",
     	        templateUrl: "buy/index.html"
     	    })
+            .state('auth', {
+                url: "/auth",
+                templateUrl: "auth/index.html"
+            })
     }
 
     function run($http, $rootScope, $window) {

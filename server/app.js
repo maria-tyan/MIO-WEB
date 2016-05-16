@@ -71,6 +71,17 @@ passport.serializeUser(function(user, done) {
 });
 
 // Routes
+app.post('/register', (req, res) => {
+  var User = require('./models/user.js');
+  var user = new User({
+    email: req.body.email,
+    password: req.body.password,
+  });
+  user.save((user) => {
+    res.send(user);
+  });
+})
+
 app.post('/login',
   passport.authenticate('json', { failureRedirect: '/failure' }),
   (req, rse) => {

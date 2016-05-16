@@ -6,7 +6,8 @@
 		<div class="form-group"> 
 			<input type="password" name="password" ng-model="password" required="required" class="form-control" placeholder="Пароль"> </input>
 		</div> 
-		<button type="submit" ng-disabled="!loginForm.$valid" ng-click="login(email,password)" class="btn login">Войти</button> 
+		<button type="submit" ng-disabled="!loginForm.$valid" ng-click="login(email,password)" class="btn login">Вход</button> 
+		<button type="submit" ng-disabled="!loginForm.$valid" ng-click="register(email,password)" class="btn login">Регистрация</button> 
 	</form>
 	<div ng-if="loggedIn">
 		<button type="submit"  class="btn login">Личный кабинет</button> 
