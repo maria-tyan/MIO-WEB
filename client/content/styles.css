@@ -29,7 +29,6 @@ p{
 }
 .navbar-def{
   background-color: rgba(119, 91, 163, .8);
-  height: 0%;
 }
 .nav-btn{
     float: left;
@@ -37,26 +36,28 @@ p{
 }
 .nav-btn li a {
   color: white;
-  border-bottom: 2px solid transparent;
-  font-weight: bold;
   font-size: 90%;
+  font-weight: bold;
   text-shadow: 1px 1px 1px #876885;
   text-transform: uppercase;
 }
 .nav-btn li a:hover,
 .nav-btn li.active a {
-  border-color: #f8e1b4;
 }
 .logo {
-  max-width: 80%;
   text-indent: -9999px;
   width: 145px;
 }
-.form-inline{
-  margin: 2%;
+.login-aria{
+  margin-top: 1.5%;
+}
+.login{
+  color: #775ba3;
+  border-radius: 0px;
+  border: 1px solid #419568;
+  font-weight: bold;
 }
 header .btn-info{
- margin: 2%;
  background: #775ba3;
  border: #4b3f55;
 }
@@ -175,6 +176,9 @@ span.mintnumber {
 }
 .download{
   margin: 5%;
+}
+.personalArea{
+  margin-top: 4%;
 }
 footer{
   color: white;

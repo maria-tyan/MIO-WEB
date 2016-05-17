@@ -2,9 +2,11 @@ var express = require('express');
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var cookieParser = require('cookie-parser');
-var passport = require('passport');
+
 var morgan = require('morgan')('dev');
-var LocalStrategy = require('passport-json').Strategy;
+
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
 // Debug output
 var debug = require('debug')('app');
@@ -48,47 +50,18 @@ app.use((req, res, next) => {
 });
 
 //auth
-passport.use(new LocalStrategy(
-  {
-    usernameField: 'email',
-    passwordField: 'password'
-  },
-  (email, password, done) => {
-    console.log(email, password)
-    var User = require('./models/user.js');
-    User.findOne({ email: email }, (err, user) => {
-      console.log(user, email, password)
-      if (err) { return done(err); }
-      if (!user) { return done(null, false); }
-      if (user.password != password) { return done(null, false); }
-      return done(null, user);
-    });
+function isLoggedIn(req, res, next) {
+  if (req.user) {
+    next();
+  } else {
+    res.send('Not authorized!', 403);
   }
-));
-
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
+}
 
 // Routes
-app.post('/register', (req, res) => {
-  var User = require('./models/user.js');
-  var user = new User({
-    email: req.body.email,
-    password: req.body.password,
-  });
-  user.save((user) => {
-    res.send(user);
-  });
-})
 
-app.post('/login',
-  passport.authenticate('json', { failureRedirect: '/failure' }),
-  (req, rse) => {
-    debug('Successful login!')
-    res.redirect('/');
-  });
-app.use('/api/user', require('./routes/user.js'));
+app.use('/api/auth', require('./routes/auth.js'));
+app.use('/api/user', isLoggedIn, require('./routes/user.js'));
 
 app.listen(config.port, () => {
   debug('Binded to port');

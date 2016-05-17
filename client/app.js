@@ -4,63 +4,86 @@
         .module('mioweb', ['ui.router'])
         .config(config)
         .run(run)
-        .service('SessionService', [
-            '$injector', '$http',
-            function($injector, $http) {
-                "use strict";
+        .service('SessionService', ['$rootScope', '$http',
+            function($rootScope, $http) {
+                var self = this;
+                $rootScope.user = null;
+
+                this.checkAccess = function() {
+                    $http
+                        .get('/api/auth/checkAccess')
+                        .success(function(response) {
+                            console.log('Logged in!')
+                            $rootScope.user = response;
+                        })
+                        .error(function(err, status) {
+                            $rootScope.user = null;
+                        })
+                }
+
+                this.logout = function() {
+                    $http
+                        .get('/api/auth/logout')
+                        .success(function(response) {
+                            console.log('Logged out!')
+                            $rootScope.user = null;
+                        })
+                        .error(function(err, status) {
+                            $rootScope.user = null;
+                        })
+                }
+
                 this.register = function(email, password) {
-                    $http.post('/register', {
+                    $http.post('/api/auth/register', {
                         email: email,
                         password: password,
-                    })
+                    });
                 }
+
                 this.login = function(email, password) {     
-                    $http.post('/login', {
+                    $http.post('/api/auth/login', {
                         email: email,
                         password: password,
                     })
                     .success(function(response) {
-                      
+                        console.log('Logged in!')
+                        $rootScope.user = response;
                     })
                     .error(function(err, status) {
-                      
+                        $rootScope.user = null;
                     })
                 }
-              /*this.checkAccess = function(event, toState, toParams, fromState, fromParams) {
-                var $scope = $injector.get('$rootScope'),
-                    $sessionStorage = $injector.get('$sessionStorage');
-
-                if (toState.data !== undefined) {
-                  if (toState.data.noLogin !== undefined && toState.data.noLogin) {
-                    // если нужно, выполняйте здесь какие-то действия 
-                    // перед входом без авторизации
-                  }
-                } else {
-                  // вход с авторизацией
-                  if ($sessionStorage.user) {
-                    $scope.$root.user = $sessionStorage.user;
-                  } else {
-                    // если пользователь не авторизован - отправляем на страницу авторизации
-                    event.preventDefault();
-                    $scope.$state.go('home');
-                  }
+                this.personalArea = function(){
+                    $scope.$state.go('personalArea');
                 }
-              };*/
+
+                this.checkAccess();
             }
           ])
-        .directive("loginForm", ['SessionService',
-            function(SessionService) {
+        .directive("loginForm", ['$rootScope', 'SessionService',
+            function($rootScope, SessionService) {
               return {
                 restrict: 'E',
                 scope: {},
                 templateUrl: './login/loginModalTemplate.html',
                 replace: 'true',
                 link: function(scope) {
+                    $rootScope.$watch('user', function(value) {
+                        scope.loggedIn = value;
+                    });
+
                     scope.login = function(email, password) {
                         SessionService.login(email, password);
                     }
+
+                    scope.logout = function() {
+                        SessionService.logout();
+                    }
+                    scope.personalArea = function() {
+                        SessionService.personalArea();
+                    }
                     scope.register = function(email, password) {
-                            SessionService.login(email, password);
+                            SessionService.register(email, password);
                         }
                   }
               }
@@ -92,9 +115,9 @@
     	        url: "/buy",
     	        templateUrl: "buy/index.html"
     	    })
-            .state('auth', {
-                url: "/auth",
-                templateUrl: "auth/index.html"
+            .state('personalArea', {
+                url: "/personalArea",
+                templateUrl: "personalArea/index.html"
             })
     }
 
