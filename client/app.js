@@ -53,9 +53,6 @@
                         $rootScope.user = null;
                     })
                 }
-                this.personalArea = function(){
-                    $scope.$state.go('personalArea');
-                }
 
                 this.checkAccess();
             }
@@ -78,9 +75,6 @@
 
                     scope.logout = function() {
                         SessionService.logout();
-                    }
-                    scope.personalArea = function() {
-                        SessionService.personalArea();
                     }
                     scope.register = function(email, password) {
                             SessionService.register(email, password);
@@ -115,9 +109,13 @@
     	        url: "/buy",
     	        templateUrl: "buy/index.html"
     	    })
-            .state('personalArea', {
-                url: "/personalArea",
-                templateUrl: "personalArea/index.html"
+            .state('account', {
+                url: "/account",
+                templateUrl: "account/index.html"
+            })
+            .state('tickets', {
+                url: "/tickets",
+                templateUrl: "tickets/index.html"
             })
     }
 

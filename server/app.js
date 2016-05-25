@@ -59,7 +59,6 @@ function isLoggedIn(req, res, next) {
 }
 
 // Routes
-
 app.use('/api/auth', require('./routes/auth.js'));
 app.use('/api/user', isLoggedIn, require('./routes/user.js'));
 

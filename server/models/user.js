@@ -10,6 +10,10 @@ var UserSchema = new Schema({
     type: String,
     required: true,
   },
+  modeldata: {
+  	type: String,
+  	required: false,
+  }
 });
 
 module.exports = mongoose.model('User', UserSchema, 'users');
