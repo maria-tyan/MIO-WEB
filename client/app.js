@@ -37,6 +37,10 @@
                     $http.post('/api/auth/register', {
                         email: email,
                         password: password,
+                    })
+                    .success(function(response) {
+                        alert('Register!');
+                        $rootScope.user = response;
                     });
                 }
 
@@ -46,7 +50,7 @@
                         password: password,
                     })
                     .success(function(response) {
-                        console.log('Logged in!')
+                        alert('Logged in!');
                         $rootScope.user = response;
                     })
                     .error(function(err, status) {
@@ -82,6 +86,26 @@
                   }
               }
             }
+        ])
+        .service('TicketService', ['$rootScope', '$http',
+            function($rootScope, $http) {
+                this.sendTicket = function(header, description) {
+                    $http.post('/api/ticket', {
+                        header: header,
+                        description: description,
+                    });
+                }
+            }
+          ])
+        .controller('TicketCtrl', ['$scope', '$rootScope', 'TicketService',
+            function($scope, $rootScope, TicketService) {
+                $scope.sendTicket = function(header, description) {
+                    if($rootScope.user) {
+                        TicketService.sendTicket(header, description);
+                        console.log('Send!');
+                    }
+                }
+            }
         ]);
 
     function config($stateProvider, $urlRouterProvider) {
@@ -116,6 +140,10 @@
             .state('tickets', {
                 url: "/tickets",
                 templateUrl: "tickets/index.html"
+            })
+            .state('auth', {
+                url: "/auth",
+                templateUrl: "auth/index.html"
             })
     }
 
