@@ -87,23 +87,43 @@
               }
             }
         ])
-        .service('TicketService', ['$rootScope', '$http',
-            function($rootScope, $http) {
-                this.sendTicket = function(header, description) {
+        .controller('TicketCtrl', ['$scope', '$rootScope',  '$http',
+            function($scope, $rootScope, $http) {
+                $scope.sendTicket = function(header, description) {
                     $http.post('/api/ticket', {
                         header: header,
                         description: description,
+                    })
+                    .success(function(response) {
+                        alert('Ticket sended!');
+                        $scope.ticket = response;
+                    })
+                    .error(function(err, status) {
+                        $scope.ticket = null;
                     });
                 }
-            }
-          ])
-        .controller('TicketCtrl', ['$scope', '$rootScope', 'TicketService',
-            function($scope, $rootScope, TicketService) {
-                $scope.sendTicket = function(header, description) {
-                    if($rootScope.user) {
-                        TicketService.sendTicket(header, description);
-                        console.log('Send!');
-                    }
+                $scope.getTicket = function() {
+                    $http.get('/api/ticket')
+                    .success(function(response) {
+                        $scope.tickets = response;
+                    })
+                    .error(function(err, status) {
+                        $scope.tickets = null;
+                    });
+                }
+                $scope.sendAnser = function(header, description, anser) {
+                    $http.post('/api/ticket/anser', {
+                        header: header,
+                        description: description,
+                        anser: anser,
+                    })
+                    .success(function(response) {
+                        alert('Anser sended!');
+                        $scope.ticket = response;
+                    })
+                    .error(function(err, status) {
+                        $scope.ticket = null;
+                    });
                 }
             }
         ]);

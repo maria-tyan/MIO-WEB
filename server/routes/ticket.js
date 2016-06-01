@@ -20,6 +20,19 @@ router.post('/', (req, res) => {
   });
 })
 
+router.post('/anser', (req, res) => {
+  var ticket = new Ticket({
+    header: req.body.header,
+    description: req.body.description,
+    email: req.user.email,
+    anser: req.body.anser,
+  });
+  
+  ticket.save((err, ticket) => {
+    res.send(ticket);
+  });
+})
+
 router.get('/:id', function(req, res) {
   User
     .findOne({_id: req.params.id})
