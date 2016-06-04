@@ -111,20 +111,22 @@
                         $scope.tickets = null;
                     });
                 }
-                $scope.sendAnser = function(header, description, anser) {
-                    $http.post('/api/ticket/anser', {
-                        header: header,
-                        description: description,
-                        anser: anser,
+
+                $scope.sendAnswer = function(ticket, answer) {
+                    console.log(ticket);
+                    $http.post('/api/ticket/answer', {
+                        _id: ticket._id,
+                        answer: answer,
                     })
                     .success(function(response) {
-                        alert('Anser sended!');
+                        alert('Аnswer sended!');
                         $scope.ticket = response;
                     })
                     .error(function(err, status) {
                         $scope.ticket = null;
                     });
                 }
+
             }
         ]);
 

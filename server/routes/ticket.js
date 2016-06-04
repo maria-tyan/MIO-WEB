@@ -20,21 +20,20 @@ router.post('/', (req, res) => {
   });
 })
 
-router.post('/anser', (req, res) => {
-  var ticket = new Ticket({
-    header: req.body.header,
-    description: req.body.description,
-    email: req.user.email,
-    anser: req.body.anser,
-  });
-  
-  ticket.save((err, ticket) => {
-    res.send(ticket);
-  });
+router.post('/answer', (req, res) => {
+  Ticket.findById(req.body._id, function(err, ticket) {
+    if (err)
+      res.send(err);
+    ticket.answer = req.body.answer;
+    ticket.save(function(err) {
+      if (err)
+        res.send(err);
+    });
+  })
 })
 
 router.get('/:id', function(req, res) {
-  User
+  Ticket
     .findOne({_id: req.params.id})
     .exec((err, ticket) => {
       res.send(ticket);

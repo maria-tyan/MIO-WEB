@@ -34,9 +34,9 @@
 				<tr ng-repeat="ticket in tickets">
 					<td>{{ticket.header}}</td>
 					<td>{{ticket.description}} </td>
-					<td>{{ticket.anser}} <input type="text" ng-model="anser" placeholder="Введите ответ"></td>
+					<td>{{ticket.anser}} <input type="text" ng-model="answer" placeholder="Введите ответ"></td>
 					<td>{{ticket.email}}</td>
-					<td><button type="submit" ng-click ="sendAnser(header, description, anser)" class="btn login">Ответить</button></td>
+					<td><button type="submit" ng-click ="sendAnswer(ticket, answer)" class="btn login">Ответить</button></td>
 				</tr>
 			</table>
 		</div>
